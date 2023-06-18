@@ -1,23 +1,37 @@
-import React, { useContext } from "react";
+import React, { useContext, useLayoutEffect } from "react";
 import {
   View,
   Text,
   StyleSheet,
-  Button,
   FlatList,
   TouchableOpacity,
 } from "react-native";
 import { Context } from "../context/BlogPostContext";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
 const BlogPostScreen = () => {
-  const { state, addBlogPost, removeBlogPost } = useContext(Context);
-  const { navigate } = useNavigation();
+  const { state, removeBlogPost } = useContext(Context);
+  const navigation = useNavigation();
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity onPress={() => navigation.navigate("Create")}>
+          <Ionicons
+            size={30}
+            color="#007fff"
+            name="add-sharp"
+            style={styles.addIcon}
+          />
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation]);
 
   return (
     <>
-      <Button title="Add Blog" onPress={addBlogPost} />
       {state.length > 0 && <View style={styles.lastHorizontalLine} />}
       <FlatList
         data={state}
@@ -25,7 +39,10 @@ const BlogPostScreen = () => {
         renderItem={({ item }) => {
           return (
             <View style={styles.renderItemsContainer}>
-              <TouchableOpacity onPress={() => navigate("Detail")}>
+              <TouchableOpacity
+                style={styles.blogTouchableOpacity}
+                onPress={() => navigation.navigate("Detail", { id: item.id })}
+              >
                 <Text style={styles.blogText}>{item.title}</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => removeBlogPost(item.id)}>
@@ -44,6 +61,9 @@ const BlogPostScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  blogTouchableOpacity: {
+    flex: 1,
+  },
   blogText: {
     fontSize: 20,
     fontWeight: "bold",
@@ -61,6 +81,10 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: "gray",
     marginHorizontal: 10,
+  },
+  addIcon: {
+    marginRight: 10,
+    fontSize: 30,
   },
 });
 

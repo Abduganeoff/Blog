@@ -1,10 +1,9 @@
-import { TouchableOpacity, StyleSheet } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import BlogPostScreen from "./src/screens/BlogPostScreen";
 import { Provider } from "./src/context/BlogPostContext";
 import BlogPostDetailScreen from "./src/screens/BlogPostDetailScreen";
+import CreateBlogPost from "./src/screens/CreateBlogPost";
 
 const Stack = createNativeStackNavigator();
 
@@ -18,11 +17,6 @@ export default function App() {
             component={BlogPostScreen}
             options={{
               title: "My Blogs",
-              headerRight: () => (
-                <TouchableOpacity>
-                  <Ionicons size={30} color="#007fff" name="add-sharp" />
-                </TouchableOpacity>
-              ),
             }}
           />
           <Stack.Screen
@@ -32,15 +26,15 @@ export default function App() {
               title: "Blog Detail",
             }}
           />
+          <Stack.Screen
+            name="Create"
+            component={CreateBlogPost}
+            options={{
+              title: "Create Blog",
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  addIcon: {
-    marginRight: 10,
-    fontSize: 30,
-  },
-});
