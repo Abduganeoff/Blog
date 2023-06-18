@@ -9,13 +9,14 @@ import {
 } from "react-native";
 import { Context } from "../context/BlogPostContext";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 const BlogPostScreen = () => {
   const { state, addBlogPost, removeBlogPost } = useContext(Context);
-  console.log(state);
+  const { navigate } = useNavigation();
+
   return (
     <>
-      <Text>Blog Home</Text>
       <Button title="Add Blog" onPress={addBlogPost} />
       {state.length > 0 && <View style={styles.lastHorizontalLine} />}
       <FlatList
@@ -24,11 +25,13 @@ const BlogPostScreen = () => {
         renderItem={({ item }) => {
           return (
             <View style={styles.renderItemsContainer}>
-              <Text>{item.title}</Text>
+              <TouchableOpacity onPress={() => navigate("Detail")}>
+                <Text style={styles.blogText}>{item.title}</Text>
+              </TouchableOpacity>
               <TouchableOpacity onPress={() => removeBlogPost(item.id)}>
                 <MaterialCommunityIcons
                   name="delete-outline"
-                  size={24}
+                  size={35}
                   color="black"
                 />
               </TouchableOpacity>
@@ -41,10 +44,14 @@ const BlogPostScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  blogText: {
+    fontSize: 20,
+    fontWeight: "bold",
+  },
   renderItemsContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    padding: 10,
+    padding: 15,
     marginVertical: 5,
     marginHorizontal: 10,
     borderBottomWidth: 1,
