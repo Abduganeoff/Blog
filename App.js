@@ -1,13 +1,13 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import BlogPostScreen from "./src/screens/BlogPostScreen";
-import { Provider as BlogPostProvider } from "./src/context/BlogPostContext";
+import { Provider } from "./src/context/BlogPostContext";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <BlogPostProvider>
+    <Provider>
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
@@ -17,6 +17,6 @@ export default function App() {
           />
         </Stack.Navigator>
       </NavigationContainer>
-    </BlogPostProvider>
+    </Provider>
   );
 }
