@@ -12,7 +12,7 @@ function BlogPostDetailScreen({ route }) {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <TouchableOpacity onPress={() => navigation.navigate("Edit")}>
+        <TouchableOpacity onPress={() => navigation.navigate("Edit", { id })}>
           <MaterialIcons size={26} color="#007fff" name="edit" />
         </TouchableOpacity>
       ),

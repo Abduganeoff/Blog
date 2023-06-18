@@ -3,7 +3,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import BlogPostScreen from "./src/screens/BlogPostScreen";
 import { Provider } from "./src/context/BlogPostContext";
 import BlogPostDetailScreen from "./src/screens/BlogPostDetailScreen";
-import CreateBlogPost from "./src/screens/CreateBlogPost";
+import BlogPostCreate from "./src/screens/BlogPostCreate";
+import BlogPostEdit from "./src/screens/BlogPostEdit";
 
 const Stack = createNativeStackNavigator();
 
@@ -28,9 +29,16 @@ export default function App() {
           />
           <Stack.Screen
             name="Create"
-            component={CreateBlogPost}
+            component={BlogPostCreate}
             options={{
               title: "Create Blog",
+            }}
+          />
+          <Stack.Screen
+            name="Edit"
+            component={BlogPostEdit}
+            options={{
+              title: "Edit Blog",
             }}
           />
         </Stack.Navigator>

@@ -1,17 +1,18 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
-import { Context } from "../context/BlogPostContext";
-import { useNavigation } from "@react-navigation/native";
 
-function CreateBlogPost() {
-  const { addBlogPost } = useContext(Context);
-  const { navigate } = useNavigation();
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+const BlogPostForm = ({
+  onSave,
+  blogTitle,
+  blogContent,
+  initialValue = { title: "", content: "" },
+}) => {
+  const [title, setTitle] = useState(initialValue.title);
+  const [content, setContent] = useState(initialValue.content);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Blog Title</Text>
+      <Text style={styles.text}>{blogTitle}</Text>
       <TextInput
         style={styles.textInput}
         autoCapitalize="none"
@@ -19,7 +20,7 @@ function CreateBlogPost() {
         value={title}
         onChangeText={setTitle}
       />
-      <Text style={styles.text}>Blog Content</Text>
+      <Text style={styles.text}>{blogContent}</Text>
       <TextInput
         style={styles.textInput}
         autoCapitalize="none"
@@ -27,14 +28,10 @@ function CreateBlogPost() {
         value={content}
         onChangeText={setContent}
       />
-      <Button
-        title="Save Blog"
-        onPress={() => addBlogPost(title, content, () => navigate("Blog"))}
-      />
+      <Button title="Save Blog" onPress={() => onSave(title, content)} />
     </View>
   );
-}
-
+};
 const styles = StyleSheet.create({
   container: {
     margin: 10,
@@ -52,5 +49,4 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
 });
-
-export default CreateBlogPost;
+export default BlogPostForm;
